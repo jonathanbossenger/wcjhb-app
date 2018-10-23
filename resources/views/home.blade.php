@@ -16,6 +16,11 @@
 
                     You are logged in!
                 </div>
+
+                <div class="card-body">
+                    Your API token is {{$user->api_token}}
+                </div>
+
             </div>
         </div>
     </div>

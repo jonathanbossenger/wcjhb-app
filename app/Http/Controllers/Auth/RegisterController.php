@@ -67,6 +67,20 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'api_token' => $this->generateApiToken($data['email'])
         ]);
+    }
+
+    /**
+     * Create an api_token based on the registered users email
+     *
+     * @param $email
+     *
+     * @return bool|string
+     */
+    private function generateApiToken($email){
+        $alpha_numeric = preg_replace("/[^A-Za-z0-9 ]/", '', bcrypt($email.str_random(60)));
+        $api_token = substr($alpha_numeric, 0, 60);
+        return $api_token;
     }
 }
