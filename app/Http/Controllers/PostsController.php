@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Post;
 
 class PostsController extends Controller
@@ -49,8 +50,15 @@ class PostsController extends Controller
         if ( ! $user) {
             return ['status' => 'error', 'message' => 'Invalid user credentials'];
         }
-        $post = Post::create($request->all());
-        Log::info(['apiCreatePost' => ['Post Created' => $post]]);
+        $post = Post::where('post_id', $request->post_id)->first();
+
+        if ($post){
+            $post->update($request->all());
+            Log::info(['apiCreatePost' => ['Post Updated' => $post]]);
+        }else {
+            $post = Post::create($request->all());
+            Log::info(['apiCreatePost' => ['Post Created' => $post]]);
+        }
 
         return ['status' => 'success', 'message' => 'Post created', 'post' => $post];
     }
