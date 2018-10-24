@@ -18,3 +18,6 @@ use Illuminate\Http\Request;
 });*/
 
 Route::middleware('auth:api')->get('/posts', 'PostsController@apiIndex');
+
+Route::middleware('auth:api')->post('/posts', 'PostsController@apiStore');
+

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
 
 class PostsController extends Controller
 {
@@ -40,6 +41,18 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    public function apiStore(Request $request)
+    {
+        $user = Auth::user();
+        if ( ! $user) {
+            return ['status' => 'error', 'message' => 'Invalid user credentials'];
+        }
+        $post = Post::create($request->all());
+        Log::info(['apiCreatePost' => ['Post Created' => $post]]);
+
+        return ['status' => 'success', 'message' => 'Post created', 'post' => $post];
     }
 
     /**
