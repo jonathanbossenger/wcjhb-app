@@ -15,7 +15,12 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return 'Posts';
+        $user = Auth::user();
+        if ( ! $user) {
+            return 'Invalid User';
+        }
+        $posts = Post::all();
+        return view('posts.index', compact('posts'));
     }
 
     public function apiIndex()
