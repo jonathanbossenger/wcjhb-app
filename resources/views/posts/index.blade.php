@@ -28,6 +28,9 @@
                                 <td>
                                     Post Date
                                 </td>
+                                <td>
+                                    Actions
+                                </td>
                             </tr>
                             </thead>
                             @foreach ($posts as $post)
@@ -35,6 +38,7 @@
                                     <td>{{$post->post_id}}</td>
                                     <td>{{$post->post_title}}</td>
                                     <td>{{$post->post_date}}</td>
+                                    <td><a href="{{url('posts/'.$post->id.'/edit')}}">Edit</a> </td>
                                 </tr>
                             @endforeach
                         </table>

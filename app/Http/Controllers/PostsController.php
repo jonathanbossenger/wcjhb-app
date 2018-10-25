@@ -82,22 +82,27 @@ class PostsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Post $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $user = Auth::user();
+        if ( ! $user) {
+            return ['status' => 'error', 'message' => 'Invalid user credentials'];
+        }
+
+        return view('posts.edit', compact('post'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the Post.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \App\Http\Requests\StorePost $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Storepost $request, $id)
     {
         //
     }
