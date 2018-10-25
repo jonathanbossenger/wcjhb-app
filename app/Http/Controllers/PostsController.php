@@ -15,12 +15,22 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return 'Posts';
+        $user = Auth::user();
+        if ( ! $user) {
+            return 'Invalid User';
+        }
+        $posts = Post::where('user_id', $user->id)->get();
+        return view('posts.index', compact('posts'));
     }
 
     public function apiIndex()
     {
-        return ['result' => 'Api Posts'];
+        $user = Auth::user();
+        if ( ! $user) {
+            return ['Invalid User'];
+        }
+        $posts = Post::where('user_id', $user->id)->get();
+        return $posts;
     }
 
     /**
@@ -50,7 +60,11 @@ class PostsController extends Controller
         if ( ! $user) {
             return ['status' => 'error', 'message' => 'Invalid user credentials'];
         }
-        $post = Post::where('post_id', $request->post_id)->first();
+
+        $additionalData['user_id'] = $user->id;
+        $request->merge($additionalData);
+
+        $post = Post::where('user_id', $user->id)->where('post_id', $request->post_id)->first();
 
         if ($post){
             $post->update($request->all());
