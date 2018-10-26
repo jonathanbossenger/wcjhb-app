@@ -24,8 +24,12 @@ Make sure [Composer](https://getcomposer.org/), [Vagrant](https://www.vagrantup.
 
 `map: app-test.local`
 
-6. Start the Homstead box. If this is the first time, you may have to wait a bit for the Homestead box to download (1.2gb!)
+6. Generate an application encryption key
+
+`php artisan key:generate`
+
+7. Start the Homestead box. If this is the first time, you may have to wait a bit for the Homestead box to download (1.2gb!)
 
 `vagrant up`
 
-7. Once finished, you can visit the value you added to the sites map in your browser
+8. Once finished, you can visit the value you added to the sites map in your browser
